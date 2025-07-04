@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyh.demo_game.mapper.AppVersionMapper">
+
+    <resultMap id="BaseResultMap" type="com.lyh.demo_game.domain.AppVersion">
+            <id property="id" column="id" />
+            <result property="appid" column="appId" />
+            <result property="versionno" column="versionNo" />
+            <result property="versioninfo" column="versionInfo" />
+            <result property="publishstatus" column="publishStatus" />
+            <result property="downloadlink" column="downloadLink" />
+            <result property="versionsize" column="versionSize" />
+            <result property="createdby" column="createdBy" />
+            <result property="creationdate" column="creationDate" />
+            <result property="modifyby" column="modifyBy" />
+            <result property="modifydate" column="modifyDate" />
+            <result property="apklocpath" column="apkLocPath" />
+            <result property="apkfilename" column="apkFileName" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,appId,versionNo,versionInfo,publishStatus,downloadLink,
+        versionSize,createdBy,creationDate,modifyBy,modifyDate,
+        apkLocPath,apkFileName
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from app_version
+        where  id = #{id} 
+    </select>
+    <select id="selectByAppId" resultType="com.lyh.demo_game.domain.AppVersion">
+        select
+        <include refid="Base_Column_List" />
+        from app_version
+        where  appid = #{appid}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from app_version
+        where  id = #{id} 
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.lyh.demo_game.domain.AppVersion" useGeneratedKeys="true">
+        insert into app_version
+        ( id,appId,versionNo,versionInfo,publishStatus,downloadLink,
+        versionSize,createdBy,creationDate,modifyBy,modifyDate,
+        apkLocPath,apkFileName)
+        values (#{id},#{appid},#{versionno},#{versioninfo},#{publishstatus},#{downloadlink},
+        #{versionsize},#{createdby},#{creationdate},#{modifyby},#{modifydate},
+        #{apklocpath},#{apkfilename})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.lyh.demo_game.domain.AppVersion" useGeneratedKeys="true">
+        insert into app_version
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="appid != null">appId,</if>
+                <if test="versionno != null">versionNo,</if>
+                <if test="versioninfo != null">versionInfo,</if>
+                <if test="publishstatus != null">publishStatus,</if>
+                <if test="downloadlink != null">downloadLink,</if>
+                <if test="versionsize != null">versionSize,</if>
+                <if test="createdby != null">createdBy,</if>
+                <if test="creationdate != null">creationDate,</if>
+                <if test="modifyby != null">modifyBy,</if>
+                <if test="modifydate != null">modifyDate,</if>
+                <if test="apklocpath != null">apkLocPath,</if>
+                <if test="apkfilename != null">apkFileName,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id},</if>
+                <if test="appid != null">#{appid},</if>
+                <if test="versionno != null">#{versionno},</if>
+                <if test="versioninfo != null">#{versioninfo},</if>
+                <if test="publishstatus != null">#{publishstatus},</if>
+                <if test="downloadlink != null">#{downloadlink},</if>
+                <if test="versionsize != null">#{versionsize},</if>
+                <if test="createdby != null">#{createdby},</if>
+                <if test="creationdate != null">#{creationdate},</if>
+                <if test="modifyby != null">#{modifyby},</if>
+                <if test="modifydate != null">#{modifydate},</if>
+                <if test="apklocpath != null">#{apklocpath},</if>
+                <if test="apkfilename != null">#{apkfilename},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.lyh.demo_game.domain.AppVersion">
+        update app_version
+        <set>
+                <if test="appid != null">
+                    appId = #{appid},
+                </if>
+                <if test="versionno != null">
+                    versionNo = #{versionno},
+                </if>
+                <if test="versioninfo != null">
+                    versionInfo = #{versioninfo},
+                </if>
+                <if test="publishstatus != null">
+                    publishStatus = #{publishstatus},
+                </if>
+                <if test="downloadlink != null">
+                    downloadLink = #{downloadlink},
+                </if>
+                <if test="versionsize != null">
+                    versionSize = #{versionsize},
+                </if>
+                <if test="createdby != null">
+                    createdBy = #{createdby},
+                </if>
+                <if test="creationdate != null">
+                    creationDate = #{creationdate},
+                </if>
+                <if test="modifyby != null">
+                    modifyBy = #{modifyby},
+                </if>
+                <if test="modifydate != null">
+                    modifyDate = #{modifydate},
+                </if>
+                <if test="apklocpath != null">
+                    apkLocPath = #{apklocpath},
+                </if>
+                <if test="apkfilename != null">
+                    apkFileName = #{apkfilename},
+                </if>
+        </set>
+        where   id = #{id} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.lyh.demo_game.domain.AppVersion">
+        update app_version
+        set 
+            appId =  #{appid},
+            versionNo =  #{versionno},
+            versionInfo =  #{versioninfo},
+            publishStatus =  #{publishstatus},
+            downloadLink =  #{downloadlink},
+            versionSize =  #{versionsize},
+            createdBy =  #{createdby},
+            creationDate =  #{creationdate},
+            modifyBy =  #{modifyby},
+            modifyDate =  #{modifydate},
+            apkLocPath =  #{apklocpath},
+            apkFileName =  #{apkfilename}
+        where   id = #{id} 
+    </update>
+</mapper>

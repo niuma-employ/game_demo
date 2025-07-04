@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyh.demo_game.mapper.DataDictionaryMapper">
+
+    <resultMap id="BaseResultMap" type="com.lyh.demo_game.domain.DataDictionary">
+            <id property="id" column="id" />
+            <result property="typecode" column="typeCode" />
+            <result property="typename" column="typeName" />
+            <result property="valueid" column="valueId" />
+            <result property="valuename" column="valueName" />
+            <result property="createdby" column="createdBy" />
+            <result property="creationdate" column="creationDate" />
+            <result property="modifyby" column="modifyBy" />
+            <result property="modifydate" column="modifyDate" />
+            <result property="typeflag" column="typeFlag" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,typeCode,typeName,valueId,valueName,createdBy,
+        creationDate,modifyBy,modifyDate,typeFlag
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from data_dictionary
+        where  id = #{id} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from data_dictionary
+        where  id = #{id} 
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.lyh.demo_game.domain.DataDictionary" useGeneratedKeys="true">
+        insert into data_dictionary
+        ( id,typeCode,typeName,valueId,valueName,createdBy,
+        creationDate,modifyBy,modifyDate,typeFlag)
+        values (#{id},#{typecode},#{typename},#{valueid},#{valuename},#{createdby},
+        #{creationdate},#{modifyby},#{modifydate},#{typeflag})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.lyh.demo_game.domain.DataDictionary" useGeneratedKeys="true">
+        insert into data_dictionary
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="typecode != null">typeCode,</if>
+                <if test="typename != null">typeName,</if>
+                <if test="valueid != null">valueId,</if>
+                <if test="valuename != null">valueName,</if>
+                <if test="createdby != null">createdBy,</if>
+                <if test="creationdate != null">creationDate,</if>
+                <if test="modifyby != null">modifyBy,</if>
+                <if test="modifydate != null">modifyDate,</if>
+                <if test="typeflag != null">typeFlag,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id},</if>
+                <if test="typecode != null">#{typecode},</if>
+                <if test="typename != null">#{typename},</if>
+                <if test="valueid != null">#{valueid},</if>
+                <if test="valuename != null">#{valuename},</if>
+                <if test="createdby != null">#{createdby},</if>
+                <if test="creationdate != null">#{creationdate},</if>
+                <if test="modifyby != null">#{modifyby},</if>
+                <if test="modifydate != null">#{modifydate},</if>
+                <if test="typeflag != null">#{typeflag},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.lyh.demo_game.domain.DataDictionary">
+        update data_dictionary
+        <set>
+                <if test="typecode != null">
+                    typeCode = #{typecode},
+                </if>
+                <if test="typename != null">
+                    typeName = #{typename},
+                </if>
+                <if test="valueid != null">
+                    valueId = #{valueid},
+                </if>
+                <if test="valuename != null">
+                    valueName = #{valuename},
+                </if>
+                <if test="createdby != null">
+                    createdBy = #{createdby},
+                </if>
+                <if test="creationdate != null">
+                    creationDate = #{creationdate},
+                </if>
+                <if test="modifyby != null">
+                    modifyBy = #{modifyby},
+                </if>
+                <if test="modifydate != null">
+                    modifyDate = #{modifydate},
+                </if>
+                <if test="typeflag != null">
+                    typeFlag = #{typeflag},
+                </if>
+        </set>
+        where   id = #{id} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.lyh.demo_game.domain.DataDictionary">
+        update data_dictionary
+        set 
+            typeCode =  #{typecode},
+            typeName =  #{typename},
+            valueId =  #{valueid},
+            valueName =  #{valuename},
+            createdBy =  #{createdby},
+            creationDate =  #{creationdate},
+            modifyBy =  #{modifyby},
+            modifyDate =  #{modifydate},
+            typeFlag =  #{typeflag}
+        where   id = #{id} 
+    </update>
+</mapper>

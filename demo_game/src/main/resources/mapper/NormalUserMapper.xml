@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyh.demo_game.mapper.NormalUserMapper">
+    <insert id="insert" parameterType="com.lyh.demo_game.domain.NormalUser">
+        INSERT INTO normal_user (userCode, userName, userPassword, userEmail, userInfo, createdBy, creationDate, modifyBy, modifyDate)
+        VALUES (#{userCode}, #{userName}, #{userPassword}, #{userEmail}, #{userInfo}, #{createdBy}, #{creationDate}, #{modifyBy}, #{modifyDate})
+    </insert>
+    <insert id="insertSelective" parameterType="com.lyh.demo_game.domain.NormalUser">
+        INSERT INTO normal_user (userCode, userName, userPassword, userEmail)
+        VALUES (#{userCode}, #{userName}, #{userPassword}, #{userEmail})
+    </insert>
+    <select id="selectByPrimaryKey" resultType="com.lyh.demo_game.domain.NormalUser">
+        SELECT * FROM normal_user WHERE id = #{id}
+    </select>
+    <select id="selectByUserCode" resultType="com.lyh.demo_game.domain.NormalUser">
+        SELECT * FROM normal_user WHERE userCode = #{userCode}
+    </select>
+    <select id="selectAll" resultType="com.lyh.demo_game.domain.NormalUser">
+        SELECT * FROM normal_user
+    </select>
+    <update id="updateByPrimaryKeySelective" parameterType="com.lyh.demo_game.domain.NormalUser">
+        UPDATE normal_user
+        <set>
+            <if test="userName != null">userName = #{userName},</if>
+            <if test="userPassword != null">userPassword = #{userPassword},</if>
+            <if test="userEmail != null">userEmail = #{userEmail},</if>
+            <if test="userInfo != null">userInfo = #{userInfo},</if>
+            <if test="modifyBy != null">modifyBy = #{modifyBy},</if>
+            <if test="modifyDate != null">modifyDate = #{modifyDate},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.lyh.demo_game.domain.NormalUser">
+        UPDATE normal_user SET userCode = #{userCode}, userName = #{userName}, userPassword = #{userPassword}, userEmail = #{userEmail}, userInfo = #{userInfo}, createdBy = #{createdBy}, creationDate = #{creationDate}, modifyBy = #{modifyBy}, modifyDate = #{modifyDate} WHERE id = #{id}
+    </update>
+</mapper> 

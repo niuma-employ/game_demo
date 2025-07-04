@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyh.demo_game.mapper.AppCollectionMapper">
+    <resultMap id="AppCollectionResultMap" type="com.lyh.demo_game.domain.AppCollection">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="appId" column="app_id"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.lyh.demo_game.domain.AppCollection">
+        INSERT INTO app_collection (user_id, app_id, create_time)
+        VALUES (#{userId}, #{appId}, NOW())
+    </insert>
+    <delete id="deleteByUserIdAndAppId">
+        DELETE FROM app_collection WHERE user_id = #{userId} AND app_id = #{appId}
+    </delete>
+    <select id="selectByUserId" resultMap="AppCollectionResultMap">
+        SELECT * FROM app_collection WHERE user_id = #{userId}
+    </select>
+    <select id="selectByUserIdAndAppId" resultMap="AppCollectionResultMap">
+        SELECT * FROM app_collection WHERE user_id = #{userId} AND app_id = #{appId}
+    </select>
+</mapper> 

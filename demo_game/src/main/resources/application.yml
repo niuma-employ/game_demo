@@ -1,0 +1,50 @@
+server:
+  port: 8888
+upload:
+  path: c:/Users/Lang/Desktop/
+
+
+#自定义静态资源
+spring:
+  resources:
+    static-locations:
+      file:${upload.path},
+      classpath:/META-INF/resources/,
+      classpath:/resources/,
+      classpath:/static/,
+      classpath:/public/
+  # Redis配置
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+    timeout: 10000
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+  datasource:
+    url: jdbc:mysql:///beyond_platform_db?serverTimezone=Asia/Shanghai&characterEncoding=utf8
+    username: root
+    password: 123456
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+#  type-aliases-package: com.lyh.demo_game.domain
+
+logging:
+  level:
+    com:
+      lyh:
+        demo_game:
+        mapper: debug
+pagehelper:
+  helper-dialect: mysql  #指明当前查询的是MySQL数据库
+  reasonable: true  #启用合理化，当pageNum小于1时查询第1页，当pageNum大于页数时查询最后一页
+  support-methods-arguments: true #是否自动分页，依据的是入参，如果参数中有pageNum，pageSize分页参数，则会自动分页
+  params: count=countSql #如果POJO或者Map中发现了countSql属性，就作为count参数使用

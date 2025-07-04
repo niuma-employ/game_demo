@@ -1,0 +1,31 @@
+### Send POST request with json body
+POST http://localhost:8888/appInfo/page?pageNum=1
+Content-Type: application/json
+
+{
+
+}
+### GET request with a header
+GET http://localhost:8888/appCateory/tree
+Accept: application/json
+
+### 测试基本缓存效果
+GET http://localhost:8888/appInfo/testCache/1
+Accept: application/json
+
+### 测试带版本信息的缓存
+GET http://localhost:8888/appInfo/testCacheWithVersion/1
+Accept: application/json
+
+### 测试缓存更新
+POST http://localhost:8888/appInfo/testCacheUpdate/1
+Content-Type: application/json
+
+{
+    "softwarename": "测试游戏",
+    "appinfo": "这是一个测试游戏"
+}
+
+### 再次测试缓存效果（应该从数据库获取，因为缓存已被删除）
+GET http://localhost:8888/appInfo/testCache/1
+Accept: application/json

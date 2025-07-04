@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyh.demo_game.mapper.AppInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.lyh.demo_game.domain.AppInfo">
+            <id property="id" column="id" />
+            <result property="softwarename" column="softwareName" />
+            <result property="apkname" column="apkName" />
+            <result property="supportrom" column="supportROM" />
+            <result property="interfacelanguage" column="interfaceLanguage" />
+            <result property="softwaresize" column="softwareSize" />
+            <result property="updatedate" column="updateDate" />
+            <result property="devid" column="devId" />
+            <result property="appinfo" column="appInfo" />
+            <result property="status" column="status" />
+            <result property="onsaledate" column="onSaleDate" />
+            <result property="offsaledate" column="offSaleDate" />
+            <result property="flatformid" column="flatformId" />
+            <result property="categorylevel3" column="categoryLevel3" />
+            <result property="downloads" column="downloads" />
+            <result property="createdby" column="createdBy" />
+            <result property="creationdate" column="creationDate" />
+            <result property="modifyby" column="modifyBy" />
+            <result property="modifydate" column="modifyDate" />
+            <result property="categorylevel1" column="categoryLevel1" />
+            <result property="categorylevel2" column="categoryLevel2" />
+            <result property="logopicpath" column="logoPicPath" />
+            <result property="logolocpath" column="logoLocPath" />
+            <result property="versionid" column="versionId" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,softwareName,apkName,supportROM,interfaceLanguage,softwareSize,
+        updateDate,devId,appInfo,status,onSaleDate,
+        offSaleDate,flatformId,categoryLevel3,downloads,createdBy,
+        creationDate,modifyBy,modifyDate,categoryLevel1,categoryLevel2,
+        logoPicPath,logoLocPath,versionId
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from app_info
+        where  id = #{id} 
+    </select>
+    <select id="seletBy" resultType="com.lyh.demo_game.domain.AppInfo">
+        select
+        a.*,
+        c1.categoryName as level1Name,
+        c2.categoryName as level2Name,
+        c3.categoryName as level3Name
+
+        from app_info a
+        left join app_category c1 on c1.id= a.categoryLevel1
+        left join app_category c2 on c2.id= a.categoryLevel2
+        left join app_category c3 on c3.id= a.categoryLevel3
+        <where>
+            <if test="softwarename != null and softwarename !=''">
+                softwareName like concat('%',#{softwarename},'%')
+            </if>
+            <if test="apkname != null and apkname !=''">
+                and apkName = #{apkname}
+            </if>
+            <if test="status != null ">
+                and status = #{status}
+            </if>
+            <if test="categorylevel1 != null ">
+                and categoryLevel1 = #{categorylevel1}
+            </if>
+            <if test="categorylevel2 != null ">
+                and categoryLevel2 = #{categorylevel2}
+            </if>
+            <if test="categorylevel3 != null ">
+                and categoryLevel3 = #{categorylevel3}
+            </if>
+
+        </where>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from app_info
+        where  id = #{id} 
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.lyh.demo_game.domain.AppInfo" useGeneratedKeys="true">
+        insert into app_info
+        ( id,softwareName,apkName,supportROM,interfaceLanguage,softwareSize,
+        updateDate,devId,appInfo,status,onSaleDate,
+        offSaleDate,flatformId,categoryLevel3,downloads,createdBy,
+        creationDate,modifyBy,modifyDate,categoryLevel1,categoryLevel2,
+        logoPicPath,logoLocPath,versionId)
+        values (#{id},#{softwarename},#{apkname},#{supportrom},#{interfacelanguage},#{softwaresize},
+        #{updatedate},#{devid},#{appinfo},#{status},#{onsaledate},
+        #{offsaledate},#{flatformid},#{categorylevel3},#{downloads},#{createdby},
+        #{creationdate},#{modifyby},#{modifydate},#{categorylevel1},#{categorylevel2},
+        #{logopicpath},#{logolocpath},#{versionid})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.lyh.demo_game.domain.AppInfo" useGeneratedKeys="true">
+        insert into app_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="softwarename != null">softwareName,</if>
+                <if test="apkname != null">apkName,</if>
+                <if test="supportrom != null">supportROM,</if>
+                <if test="interfacelanguage != null">interfaceLanguage,</if>
+                <if test="softwaresize != null">softwareSize,</if>
+                <if test="updatedate != null">updateDate,</if>
+                <if test="devid != null">devId,</if>
+                <if test="appinfo != null">appInfo,</if>
+                <if test="status != null">status,</if>
+                <if test="onsaledate != null">onSaleDate,</if>
+                <if test="offsaledate != null">offSaleDate,</if>
+                <if test="flatformid != null">flatformId,</if>
+                <if test="categorylevel3 != null">categoryLevel3,</if>
+                <if test="downloads != null">downloads,</if>
+                <if test="createdby != null">createdBy,</if>
+                <if test="creationdate != null">creationDate,</if>
+                <if test="modifyby != null">modifyBy,</if>
+                <if test="modifydate != null">modifyDate,</if>
+                <if test="categorylevel1 != null">categoryLevel1,</if>
+                <if test="categorylevel2 != null">categoryLevel2,</if>
+                <if test="logopicpath != null">logoPicPath,</if>
+                <if test="logolocpath != null">logoLocPath,</if>
+                <if test="versionid != null">versionId,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id},</if>
+                <if test="softwarename != null">#{softwarename},</if>
+                <if test="apkname != null">#{apkname},</if>
+                <if test="supportrom != null">#{supportrom},</if>
+                <if test="interfacelanguage != null">#{interfacelanguage},</if>
+                <if test="softwaresize != null">#{softwaresize},</if>
+                <if test="updatedate != null">#{updatedate},</if>
+                <if test="devid != null">#{devid},</if>
+                <if test="appinfo != null">#{appinfo},</if>
+                <if test="status != null">#{status},</if>
+                <if test="onsaledate != null">#{onsaledate},</if>
+                <if test="offsaledate != null">#{offsaledate},</if>
+                <if test="flatformid != null">#{flatformid},</if>
+                <if test="categorylevel3 != null">#{categorylevel3},</if>
+                <if test="downloads != null">#{downloads},</if>
+                <if test="createdby != null">#{createdby},</if>
+                <if test="creationdate != null">#{creationdate},</if>
+                <if test="modifyby != null">#{modifyby},</if>
+                <if test="modifydate != null">#{modifydate},</if>
+                <if test="categorylevel1 != null">#{categorylevel1},</if>
+                <if test="categorylevel2 != null">#{categorylevel2},</if>
+                <if test="logopicpath != null">#{logopicpath},</if>
+                <if test="logolocpath != null">#{logolocpath},</if>
+                <if test="versionid != null">#{versionid},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.lyh.demo_game.domain.AppInfo">
+        update app_info
+        <set>
+                <if test="softwarename != null">
+                    softwareName = #{softwarename},
+                </if>
+                <if test="apkname != null">
+                    apkName = #{apkname},
+                </if>
+                <if test="supportrom != null">
+                    supportROM = #{supportrom},
+                </if>
+                <if test="interfacelanguage != null">
+                    interfaceLanguage = #{interfacelanguage},
+                </if>
+                <if test="softwaresize != null">
+                    softwareSize = #{softwaresize},
+                </if>
+                <if test="updatedate != null">
+                    updateDate = #{updatedate},
+                </if>
+                <if test="devid != null">
+                    devId = #{devid},
+                </if>
+                <if test="appinfo != null">
+                    appInfo = #{appinfo},
+                </if>
+                <if test="status != null">
+                    status = #{status},
+                </if>
+                <if test="onsaledate != null">
+                    onSaleDate = #{onsaledate},
+                </if>
+                <if test="offsaledate != null">
+                    offSaleDate = #{offsaledate},
+                </if>
+                <if test="flatformid != null">
+                    flatformId = #{flatformid},
+                </if>
+                <if test="categorylevel3 != null">
+                    categoryLevel3 = #{categorylevel3},
+                </if>
+                <if test="downloads != null">
+                    downloads = #{downloads},
+                </if>
+                <if test="createdby != null">
+                    createdBy = #{createdby},
+                </if>
+                <if test="creationdate != null">
+                    creationDate = #{creationdate},
+                </if>
+                <if test="modifyby != null">
+                    modifyBy = #{modifyby},
+                </if>
+                <if test="modifydate != null">
+                    modifyDate = #{modifydate},
+                </if>
+                <if test="categorylevel1 != null">
+                    categoryLevel1 = #{categorylevel1},
+                </if>
+                <if test="categorylevel2 != null">
+                    categoryLevel2 = #{categorylevel2},
+                </if>
+                <if test="logopicpath != null">
+                    logoPicPath = #{logopicpath},
+                </if>
+                <if test="logolocpath != null">
+                    logoLocPath = #{logolocpath},
+                </if>
+                <if test="versionid != null">
+                    versionId = #{versionid},
+                </if>
+        </set>
+        where   id = #{id} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.lyh.demo_game.domain.AppInfo">
+        update app_info
+        set
+            softwareName =  #{softwarename},
+            apkName =  #{apkname},
+            supportROM =  #{supportrom},
+            interfaceLanguage =  #{interfacelanguage},
+            softwareSize =  #{softwaresize},
+            updateDate =  #{updatedate},
+            devId =  #{devid},
+            appInfo =  #{appinfo},
+            status =  #{status},
+            onSaleDate =  #{onsaledate},
+            offSaleDate =  #{offsaledate},
+            flatformId =  #{flatformid},
+            categoryLevel3 =  #{categorylevel3},
+            downloads =  #{downloads},
+            createdBy =  #{createdby},
+            creationDate =  #{creationdate},
+            modifyBy =  #{modifyby},
+            modifyDate =  #{modifydate},
+            categoryLevel1 =  #{categorylevel1},
+            categoryLevel2 =  #{categorylevel2},
+            logoPicPath =  #{logopicpath},
+            logoLocPath =  #{logolocpath},
+            versionId =  #{versionid}
+        where   id = #{id}
+    </update>
+    <select id="selectByDevId" resultType="com.lyh.demo_game.domain.AppInfo">
+        SELECT
+            a.*,
+            c1.categoryName as level1Name,
+            c2.categoryName as level2Name,
+            c3.categoryName as level3Name
+        FROM app_info a
+                 left join app_category c1 on c1.id = a.categoryLevel1
+                 left join app_category c2 on c2.id = a.categoryLevel2
+                 left join app_category c3 on c3.id = a.categoryLevel3
+        WHERE devId = #{devId}
+    </select>
+    <select id="selectOnShelf" resultType="com.lyh.demo_game.domain.AppInfo">
+        select
+          a.*,
+          c1.categoryName as level1Name,
+          c2.categoryName as level2Name,
+          c3.categoryName as level3Name
+        from app_info a
+        left join app_category c1 on c1.id = a.categoryLevel1
+        left join app_category c2 on c2.id = a.categoryLevel2
+        left join app_category c3 on c3.id = a.categoryLevel3
+        where a.status = 4
+    </select>
+    <select id="selectAllWithDevName" resultType="com.lyh.demo_game.domain.AppInfo">
+        SELECT a.*,
+               c1.categoryName as level1Name,
+               c2.categoryName as level2Name,
+               c3.categoryName as level3Name,
+               d.devName as devName
+        FROM app_info a
+            LEFT JOIN dev_user d ON a.devId = d.id
+            left join app_category c1 on c1.id = a.categoryLevel1
+            left join app_category c2 on c2.id = a.categoryLevel2
+            left join app_category c3 on c3.id = a.categoryLevel3
+    </select>
+</mapper>
