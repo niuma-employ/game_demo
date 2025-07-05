@@ -155,9 +155,11 @@ public class AppInfoController {
     @PostMapping("/page")
     public ResultVo page(@RequestBody AppInfo appInfo, @RequestParam(defaultValue = "1" )Integer pageNum, @RequestHeader("token") String token, @RequestHeader("userType") String userType){
         Long userId = null;
-        if (!"user".equals(userType)) {
+        if ("dev".equals(userType)) {
+            // 只有开发者需要 userId，用于查询自己创建的应用
             userId = JwtUtils.getUserId(token, userType);
         }
+        // admin 和 user 都不需要 userId，admin 查询所有应用，user 查询已上架应用
         PageInfo pageInfo = appInfoService.getPage(appInfo,pageNum, userType, userId);
         return ResultVo.success("查询成功",pageInfo);
     }
